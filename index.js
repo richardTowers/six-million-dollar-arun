@@ -1,6 +1,7 @@
 var app = require('express')(),
 	http = require('http').Server(app),
 	io = require('socket.io')(http),
+	ngrok = require('ngrok'),
 	five = require("johnny-five"),
 	board = new five.Board({repl: false});
 
@@ -13,7 +14,9 @@ board.on("ready", function () {
 	});
 
 	http.listen(3000, function () {
-		console.log('listening on *:3000');
+		ngrok.connect(3000, function (err, url) {
+			console.log(url);
+		})
 	});
 
 	io.on('connection', function (socket) {
