@@ -6,42 +6,15 @@
   <body>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-    var socket = io(),
-      left = 37,
-      forward = 38,
-      right = 39,
-      backward = 40;
+    function getDirection (keyCode) {
+      return { 37: 'left', 38: 'forward', 39: 'right', 40: 'backward' }[keyCode];
+    }
+    var socket = io();
     document.onkeydown = function (event) {
-      switch (event.keyCode) {
-        case left:
-          socket.emit('left-on');
-          break;
-        case forward:
-          socket.emit('forward-on');
-          break;
-        case right:
-          socket.emit('right-on');
-          break;
-        case backward:
-          socket.emit('backward-on');
-          break;
-      }
+      socket.emit(getDirection(event.keyCode) + '-on');
     };
     document.onkeyup = function (event) {
-      switch (event.keyCode) {
-        case left:
-          socket.emit('left-off');
-          break;
-        case forward:
-          socket.emit('forward-off');
-          break;
-        case right:
-          socket.emit('right-off');
-          break;
-        case backward:
-          socket.emit('backward-off');
-          break;
-      }
+      socket.emit(getDirection(event.keyCode) + '-off');
     };
     </script>
   </body>
