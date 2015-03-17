@@ -4,13 +4,45 @@
     <title>Socket.IO chat</title>
   </head>
   <body>
-    <button id="on">On</button>
-    <button id="off">Off</button>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-    var socket = io();
-    document.getElementById('on').onclick = function () { socket.emit('on'); };
-    document.getElementById('off').onclick = function () { socket.emit('off'); };
+    var socket = io(),
+      left = 37,
+      forward = 38,
+      right = 39,
+      backward = 40;
+    document.onkeydown = function (event) {
+      switch (event.keyCode) {
+        case left:
+          socket.emit('left-on');
+          break;
+        case forward:
+          socket.emit('forward-on');
+          break;
+        case right:
+          socket.emit('right-on');
+          break;
+        case backward:
+          socket.emit('backward-on');
+          break;
+      }
+    };
+    document.onkeyup = function (event) {
+      switch (event.keyCode) {
+        case left:
+          socket.emit('left-off');
+          break;
+        case forward:
+          socket.emit('forward-off');
+          break;
+        case right:
+          socket.emit('right-off');
+          break;
+        case backward:
+          socket.emit('backward-off');
+          break;
+      }
+    };
     </script>
   </body>
 </html>
