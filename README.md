@@ -2,7 +2,7 @@
 > Gentlemen, we can rebuild him. We have the technology. We have the capability to make the world's first bionic man. Arun will be that man. Better than he was before. Better...stronger...faster.
 
 
-![The Six Million Dollar Man](http://i.imgur.com/bW1zRXm.jpg)
+![The Six Million Dollar Man](images/sixmilliondollararun.png)
 
 ## A lightweight telepresence robot
 
