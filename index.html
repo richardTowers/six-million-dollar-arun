@@ -7,14 +7,19 @@
 		<script src="/socket.io/socket.io.js"></script>
 		<script>
 		function getDirection (keyCode) {
-			return { 37: 'left', 38: 'forward', 39: 'right', 40: 'backward' }[keyCode];
+			return { 87: 'left', 81: 'forward', 83: 'right', 65: 'backward' }[keyCode];
 		}
-		var socket = io();
+		var socket = io(),
+			depressedKeys = {};
 		document.onkeydown = function (event) {
-			socket.emit(getDirection(event.keyCode) + '-on');
+			if (!depressedKeys[event.keyCode]) {
+				socket.emit(getDirection(event.keyCode) + '-on');
+			}
+			depressedKeys[event.keyCode] = true;
 		};
 		document.onkeyup = function (event) {
 			socket.emit(getDirection(event.keyCode) + '-off');
+			depressedKeys[event.keyCode] = false;
 		};
 		</script>
 	</body>
