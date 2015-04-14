@@ -2,8 +2,92 @@
 <html>
 	<head>
 		<title>$6M Arun</title>
+		<meta charset="utf8">
+		<style>
+		html,body {
+			background-color: #B51019;
+			font-family: sans-serif;
+		}
+		* {
+			margin: 0;
+			border: 0;
+			padding: 0;
+		}
+		h1 {
+			font-family: impact, sans-serif;
+			text-transform: uppercase;
+			color: white;
+			text-shadow:
+				-3px -3px 0 #000,
+				3px -3px 0 #000,
+				-3px 3px 0 #000,
+				3px 3px 0 #000;
+			padding: 6px;
+		}
+		a {
+			text-decoration: none;
+		}
+		line {
+			stroke: black;
+			stroke-width: 5;
+		}
+		.container {
+			margin-top: 20px;
+			width: 500px;
+			margin-left: auto;
+			margin-right: auto;
+			display: flex;
+			flex-direction: column;
+		}
+		.row {
+			display: flex;
+			flex-direction: row;
+		}
+		.spacer {
+			flex-grow: 1;
+		}
+		.control {
+			width: 50px;
+			height: 50px;
+			color: white;
+			text-align: center;
+			line-height: 50px;
+			font-size: x-large;
+		}
+		.crosshair {
+			width: 400px;
+			height: 400px;
+		}
+		</style>
 	</head>
 	<body>
+		<h1>The Six Million <br> Dollar Arun</h1>
+		<div class="container">
+			<div class="row">
+				<a href="#0" class="control q">↑ Q</a>
+				<span class="spacer"></span>
+				<a href="#1" class="control w">W ↑</a>
+			</div>
+			<div class="row">
+				<span class="spacer"></span>
+				<svg class="crosshair">
+					<circle cx="200" cy="200" r="175" fill="#000"/>
+					<circle cx="200" cy="200" r="170" fill="#4263A6"/>
+					<circle cx="200" cy="200" r="160" fill="#DED57A"/>
+					<line x1="200" y1="350" x2="200" y2="400" />
+					<line x1="200" y1="50" x2="200" y2="0" />
+					<line x1="50" y1="200" x2="0" y2="200" />
+					<line x1="350" y1="200" x2="400" y2="200" />
+					<text id="status" x="160" y="200">Connecting...</text>
+				</svg>
+				<span class="spacer"></span>
+			</div>
+			<div class="row">
+				<a href="#2" class="control a">↓ A</a>
+				<span class="spacer"></span>
+				<a href="#3" class="control s">S ↓</a>
+			</div>
+		</div>
 		<script src="/socket.io/socket.io.js"></script>
 		<script>
 		function getDirection (keyCode) {
@@ -11,6 +95,14 @@
 		}
 		var socket = io(),
 			depressedKeys = {};
+		socket.on('connect', function () {
+			var statusElement = document.getElementById('status');
+			statusElement.innerHTML = 'Connected';
+		});
+		socket.on('reconnecting', function () {
+			var statusElement = document.getElementById('status');
+			statusElement.innerHTML = 'Trying to reconnect...';
+		});
 		document.onkeydown = function (event) {
 			if (!depressedKeys[event.keyCode]) {
 				socket.emit(getDirection(event.keyCode) + '-on');
