@@ -104,8 +104,9 @@
 			statusElement.innerHTML = 'Trying to reconnect...';
 		});
 		document.onkeydown = function (event) {
-			if (!depressedKeys[event.keyCode]) {
-				socket.emit(getDirection(event.keyCode) + '-on');
+			var direction = getDirection(event.keyCode);
+			if (!depressedKeys[event.keyCode] && direction) {
+				socket.emit(direction + '-on');
 			}
 			depressedKeys[event.keyCode] = true;
 		};
